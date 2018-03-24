@@ -125,6 +125,15 @@ public final class NVActivityIndicatorPresenter {
         return label
     }()
 
+    private let viewBGRect: UIView = {
+        let viewGB = UIView()
+
+        //viewGB.backgroundColor = UIColor.init(white: 0, alpha: 0.13)
+        viewGB.translatesAutoresizingMaskIntoConstraints = false
+
+        return viewGB
+    }()
+
     private var state: State = .hidden
     private let startAnimatingGroup = DispatchGroup()
 
@@ -188,6 +197,10 @@ public final class NVActivityIndicatorPresenter {
         containerView.restorationIdentifier = restorationIdentifier
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
+        viewBGRect.layer.cornerRadius = 10
+        viewBGRect.backgroundColor = UIColor(white: 0, alpha: 0.7) 
+        containerView.addSubview(viewBGRect)
+
         let activityIndicatorView = NVActivityIndicatorView(
             frame: CGRect(x: 0, y: 0, width: activityData.size.width, height: activityData.size.height),
             type: activityData.type,
@@ -197,6 +210,31 @@ public final class NVActivityIndicatorPresenter {
         activityIndicatorView.startAnimating()
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(activityIndicatorView)
+
+        ({
+            let xConstraint = NSLayoutConstraint(item: containerView, attribute: .centerX, relatedBy: .equal, toItem: viewBGRect, attribute: .centerX, multiplier: 1, constant: 0)
+            let yConstraint = NSLayoutConstraint(item: containerView, attribute: .centerY, relatedBy: .equal, toItem: viewBGRect, attribute: .centerY, multiplier: 1, constant: -10)
+
+            let width = NSLayoutConstraint(
+                item: viewBGRect,
+                attribute: .width,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: activityData.size.width * 3)
+
+            let height = NSLayoutConstraint(
+                item: viewBGRect,
+                attribute: .height,
+                relatedBy: .equal,
+                toItem: nil,
+                attribute: .notAnAttribute,
+                multiplier: 1.0,
+                constant: (activityData.size.width * 3)-20)
+
+            containerView.addConstraints([xConstraint, yConstraint, width, height])
+            }())
 
         // Add constraints for `activityIndicatorView`.
         ({
@@ -210,6 +248,8 @@ public final class NVActivityIndicatorPresenter {
         messageLabel.textColor = activityData.textColor
         messageLabel.text = activityData.message
         containerView.addSubview(messageLabel)
+
+
 
         // Add constraints for `messageLabel`.
         ({
