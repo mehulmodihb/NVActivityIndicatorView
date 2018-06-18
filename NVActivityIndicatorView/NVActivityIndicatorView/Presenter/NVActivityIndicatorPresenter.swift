@@ -198,7 +198,7 @@ public final class NVActivityIndicatorPresenter {
         containerView.translatesAutoresizingMaskIntoConstraints = false
 
         viewBGRect.layer.cornerRadius = 10
-        viewBGRect.backgroundColor = UIColor(white: 0, alpha: 0.7) 
+        viewBGRect.backgroundColor = UIColor(white: 0, alpha: 1.0) 
         containerView.addSubview(viewBGRect)
 
         let activityIndicatorView = NVActivityIndicatorView(
