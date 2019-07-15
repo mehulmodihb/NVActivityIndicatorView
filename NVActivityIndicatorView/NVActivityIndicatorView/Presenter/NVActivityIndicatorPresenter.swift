@@ -128,7 +128,7 @@ public final class NVActivityIndicatorPresenter {
     private let viewBGRect: UIView = {
         let viewGB = UIView()
 
-        //viewGB.backgroundColor = UIColor.init(white: 0, alpha: 0.13)
+        viewGB.backgroundColor = UIColor.init(red: (160.0/255.0), green: (93.0/255.0), blue: (165.0/255.0), alpha: 1.0)
         viewGB.translatesAutoresizingMaskIntoConstraints = false
 
         return viewGB
